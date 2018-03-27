@@ -3,7 +3,7 @@
  * Plugin Name:       Lean Redirect Editor
  * Plugin URI:        https://github.com/andrejcremoznik/lean-redirect-editor
  * Description:       Lean and easy management for redirects on your WordPress website.
- * Version:           1.0
+ * Version:           1.1
  * Author:            Andrej Cremoznik
  * Author URI:        https://keybase.io/andrejcremoznik
  * License:           MIT
@@ -63,7 +63,7 @@ class LeanRedirectEditor {
    */
   public function redirect() {
     // Get redirect rules from cache
-    $redirects = get_transient('lre_rules');
+    $redirects = wp_cache_get('lre_rules');
     // If no cache, get the rules from the stored options, parse them, and cache
     if ($redirects === false) {
       $rules = ($opt = get_option('lre_rules')) ? explode("\n", $opt) : [];
@@ -96,7 +96,7 @@ class LeanRedirectEditor {
         $redirects[$from] = $to;
       }
       // Cache rules for 60 seconds
-      set_transient('lre_rules', $redirects, 60);
+      wp_cache_set('lre_rules', $redirects);
     }
     // Get current requested path
     $request_url = esc_url($_SERVER['REQUEST_URI']);
