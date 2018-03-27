@@ -1,0 +1,4 @@
+* text=auto
+
+.* export-ignore
+*.md export-ignore
